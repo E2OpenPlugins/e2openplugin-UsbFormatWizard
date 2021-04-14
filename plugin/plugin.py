@@ -97,13 +97,13 @@ Press red button to continue.
 		device = "/dev/%s" % (self.device)
 		cmd = "echo -e 'Partitioning: %s \n\n'" % (device)
 		cmd2 = 'printf "0,\n;\n;\n;\ny\n" | sfdisk -f %s' % (device)
-		self.session.open(Console, title="Partitioning...", cmdlist=[cmd, cmd2], finishedCallback = self.do_Format)
+		self.session.open(Console, title="Partitioning...", cmdlist=[cmd, cmd2], finishedCallback=self.do_Format)
 		
 	def do_Format(self):
 		device = "/dev/%s1" % (self.device)
 		cmd = "echo -e 'Formatting: %s \n\n'" % (device)
 		cmd2 = "/sbin/mkfs.ext4 %s" % (device)
-		self.session.open(Console, title="Formatting...", cmdlist=[cmd, cmd2], finishedCallback = self.succesS)
+		self.session.open(Console, title="Formatting...", cmdlist=[cmd, cmd2], finishedCallback=self.succesS)
 	
 	def step_Bump(self):
 		if self.step == 1:
@@ -151,4 +151,4 @@ def main(session, **kwargs):
 
 
 def Plugins(**kwargs):
-	return PluginDescriptor(name="UsbFormatWizard", description="Wizard to format usb devices for Linux", where = PluginDescriptor.WHERE_PLUGINMENU, fnc=main)
+	return PluginDescriptor(name="UsbFormatWizard", description="Wizard to format usb devices for Linux", where=PluginDescriptor.WHERE_PLUGINMENU, fnc=main)
