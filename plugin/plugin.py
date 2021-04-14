@@ -20,6 +20,7 @@ from Components.Pixmap import Pixmap
 from Tools.Directories import fileExists
 from os import system, listdir
 
+
 class Bh_UsbFormat(Screen):
 	skin = """
 	<screen position="center,center" size="580,350" title="Black Pole Usb Format Wizard">
@@ -29,6 +30,7 @@ class Bh_UsbFormat(Screen):
 		<widget name="key_red" position="100,300" zPosition="1" size="140,40" font="Regular;20" halign="center" valign="center" backgroundColor="#9f1313" transparent="1" />
 		<widget name="key_green" position="340,300" zPosition="1" size="140,40" font="Regular;20" halign="center" valign="center" backgroundColor="#1f771f" transparent="1" />
 	</screen>"""
+
 	def __init__(self, session):
 		Screen.__init__(self, session)
 		
@@ -50,7 +52,6 @@ Push red button to continue when you are ready and your usb is disconnected.
 		self.step = 1
 		self.devices = []
 		self.device = None
-	
 	
 	def stepOne(self):
 		msg = """Connect your usb storage to your set top box
@@ -92,7 +93,6 @@ Press red button to continue.
 		else:
 			self.do_Part()
 					
-
 	def do_Part(self):
 		device = "/dev/%s" % (self.device)
 		cmd = "echo -e 'Partitioning: %s \n\n'" % (device)
@@ -136,8 +136,6 @@ Press red button to continue.
 			size = "%d.%03d GB" % (cap / 1000, cap % 1000)
 		info = "Model: %s %s\nSize: %s\nDevice: /dev/%s" % (vendor, model, size, device)
 		return info
-	
-	
 	
 	def succesS(self):
 		self.wizClose("Usb storage succesfully formatted.\n")
