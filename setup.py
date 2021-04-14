@@ -1,7 +1,7 @@
 from distutils.core import setup, Extension
 
 pkg = 'Extensions.UsbFormatWizard'
-setup (name='enigma2-plugin-extensions-usbformatwizard',
+setup(name='enigma2-plugin-extensions-usbformatwizard',
        version='0.1',
        license='GPLv2',
        url='https://github.com/E2OpenPlugins/e2openplugin-UsbFormatWizard',
