@@ -1,12 +1,12 @@
 ##############################################################################
-#                         <<< Usb Format Wizard  >>>                            
-#                                                                            
-#                     (c) 2012 meo <lupomeo@hotmail.com>          
-#                                                                            
-#  This file is open source software; you can redistribute it and/or modify  
-#     it under the terms of the GNU General Public License version 2 as      
-#               published by the Free Software Foundation.                   
-#                                                                            
+#                         <<< Usb Format Wizard  >>>
+#
+#                     (c) 2012 meo <lupomeo@hotmail.com>
+#
+#  This file is open source software; you can redistribute it and/or modify
+#     it under the terms of the GNU General Public License version 2 as
+#               published by the Free Software Foundation.
+#
 ##############################################################################
 
 
@@ -33,7 +33,7 @@ class Bh_UsbFormat(Screen):
 
 	def __init__(self, session):
 		Screen.__init__(self, session)
-		
+
 		msg = """This wizard will help you to format Usb mass storages for Linux.
 Please be sure that your usb drive is not connected to your set top box before to continue.
 If your usb drive is connected and mounted you have to poweroff your box, remove the usb device and reboot.
@@ -52,7 +52,7 @@ Push red button to continue when you are ready and your usb is disconnected.
 		self.step = 1
 		self.devices = []
 		self.device = None
-	
+
 	def stepOne(self):
 		msg = """Connect your usb storage to your set top box
 Press red button to continue when ready.
@@ -60,14 +60,14 @@ Press red button to continue when ready.
 		self.devices = self.get_Devicelist()
 		self["lab1"].setText(msg)
 		self.step = 2
-		
+
 	def stepTwo(self):
 		msg = """The wizard will now try to identify your connected usb storage.
 Press red button to continue.
-"""				
+"""
 		self["lab1"].setText(msg)
 		self.step = 3
-	
+
 	def stepThree(self):
 		newdevices = self.get_Devicelist()
 		for d in newdevices:
@@ -80,7 +80,7 @@ Press red button to continue.
 			msg += "\nWarning: all the data will be lost.\nAre you sure you want to format this device?\n"
 			self["lab1"].setText(msg)
 			self.step = 4
-			
+
 	def stepFour(self):
 		device = "/dev/" + self.device
 		partition = device + "1"
@@ -92,19 +92,19 @@ Press red button to continue.
 			self.do_Format()
 		else:
 			self.do_Part()
-					
+
 	def do_Part(self):
 		device = "/dev/%s" % (self.device)
 		cmd = "echo -e 'Partitioning: %s \n\n'" % (device)
 		cmd2 = 'printf "0,\n;\n;\n;\ny\n" | sfdisk -f %s' % (device)
 		self.session.open(Console, title="Partitioning...", cmdlist=[cmd, cmd2], finishedCallback=self.do_Format)
-		
+
 	def do_Format(self):
 		device = "/dev/%s1" % (self.device)
 		cmd = "echo -e 'Formatting: %s \n\n'" % (device)
 		cmd2 = "/sbin/mkfs.ext4 %s" % (device)
 		self.session.open(Console, title="Formatting...", cmdlist=[cmd, cmd2], finishedCallback=self.succesS)
-	
+
 	def step_Bump(self):
 		if self.step == 1:
 			self.stepOne()
@@ -114,7 +114,7 @@ Press red button to continue.
 			self.stepThree()
 		elif self.step == 4:
 			self.stepFour()
-			
+
 	def get_Devicelist(self):
 		devices = []
 		folder = listdir("/sys/block")
@@ -122,7 +122,7 @@ Press red button to continue.
 			if f.find('sd') != -1:
 				devices.append(f)
 		return devices
-			
+
 	def get_Deviceinfo(self, device):
 		info = vendor = model = size = ""
 		filename = "/sys/block/%s/device/vendor" % (device)
@@ -136,7 +136,7 @@ Press red button to continue.
 			size = "%d.%03d GB" % (cap / 1000, cap % 1000)
 		info = "Model: %s %s\nSize: %s\nDevice: /dev/%s" % (vendor, model, size, device)
 		return info
-	
+
 	def succesS(self):
 		self.wizClose("Usb storage succesfully formatted.\n")
 
