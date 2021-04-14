@@ -76,7 +76,7 @@ Press red button to continue.
 			self.wizClose("Sorry, no new usb storage detected.\nBe sure to follow wizard instructions.")
 		else:
 			msg = self.get_Deviceinfo(self.device)
-			msg +="\nWarning: all the data will be lost.\nAre you sure you want to format this device?\n"
+			msg += "\nWarning: all the data will be lost.\nAre you sure you want to format this device?\n"
 			self["lab1"].setText(msg)
 			self.step = 4
 			
@@ -133,7 +133,7 @@ Press red button to continue.
 			filename = "/sys/block/%s/size" % (device)
 			size = int(file(filename).read().strip())
 			cap = size / 1000 * 512 / 1000
-			size = "%d.%03d GB" % (cap/1000, cap%1000)
+			size = "%d.%03d GB" % (cap / 1000, cap % 1000)
 		info = "Model: %s %s\nSize: %s\nDevice: /dev/%s" % (vendor, model, size, device)
 		return info
 	
